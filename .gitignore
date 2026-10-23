@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+.env
+.env.local
+*.tsbuildinfo
+next-env.d.ts
+.vitest
+
+# The source archive is just this repository, zipped for the submission form.
+submission/pahunch-source.zip

@@ -1,0 +1,27 @@
+# Neo4j for Pahunch. Optional: the app falls back to its bundled graph when this
+# is not running, and says so in the UI.
+#
+#   docker compose up -d
+#   npm run seed
+services:
+  neo4j:
+    image: neo4j:5.26-community
+    container_name: pahunch-neo4j
+    ports:
+      - "7474:7474" # Browser
+      - "7687:7687" # Bolt
+    environment:
+      NEO4J_AUTH: neo4j/pahunch2026
+      NEO4J_server_memory_heap_initial__size: 512m
+      NEO4J_server_memory_heap_max__size: 1G
+      NEO4J_server_memory_pagecache_size: 512m
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - neo4j-data:/data
+
+volumes:
+  neo4j-data:
